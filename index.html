@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#f6c515">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Para Jessy 🌻</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{font-family:Georgia,'Times New Roman',serif;background:#fff1a8;color:#624900;touch-action:manipulation}
+#app{width:100%;height:100%;position:relative;overflow:hidden;background:
+radial-gradient(circle at 50% 45%,rgba(255,255,255,.9),rgba(255,239,137,.75) 42%,#f2c51c 100%)}
+.screen{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:25px;transition:opacity 1s,transform 1s}
+.hidden{opacity:0!important;pointer-events:none;transform:scale(1.08)}
+.start{text-align:center;z-index:10}
+.start .flower{font-size:95px;filter:drop-shadow(0 10px 10px rgba(110,75,0,.2));animation:sway 2.2s ease-in-out infinite}
+.start h1{font-size:clamp(42px,9vw,76px);margin:12px 0 2px;color:#d39400}
+.start p{font-size:clamp(18px,4vw,27px);margin:8px 0 30px}
+.start button,.continue{
+border:0;border-radius:50px;padding:16px 28px;background:#e8ae00;color:white;
+font-size:18px;font-weight:bold;box-shadow:0 8px 20px rgba(111,76,0,.25)}
+.hint{font:12px Arial,sans-serif;opacity:.6;margin-top:15px}
+.card{z-index:5;width:min(700px,94vw);max-height:90vh;overflow:auto;text-align:center;padding:35px 25px 28px;border-radius:35px;
+background:rgba(255,255,255,.77);backdrop-filter:blur(13px);box-shadow:0 20px 70px rgba(105,75,0,.25)}
+.card .big{font-size:72px}
+.card h2{font-size:clamp(30px,7vw,52px);margin:0;color:#d39400}
+.date{font:600 14px Arial,sans-serif;letter-spacing:3px;text-transform:uppercase;color:#9b7400;margin-top:7px}
+.intro{font-size:clamp(20px,4.5vw,29px);line-height:1.45;margin:25px auto 20px;max-width:600px}
+.reveal{margin-top:5px}
+#letter{display:none;font-size:clamp(20px,4.5vw,29px);line-height:1.55;margin:25px auto 5px;max-width:620px;animation:appear 1.5s}
+#letter strong{color:#d08b00}
+.signature{font-size:24px;margin-top:18px}
+.music{position:fixed;top:max(12px,env(safe-area-inset-top));right:12px;z-index:20;border:0;border-radius:30px;padding:10px 14px;background:rgba(255,255,255,.6);color:#765800;font:13px Arial,sans-serif}
+.flowerFloat{position:absolute;z-index:2;pointer-events:none;animation:rise linear forwards}
+.petal{position:absolute;top:-50px;z-index:1;pointer-events:none;animation:fall linear forwards}
+#final{z-index:8;text-align:center}
+.finalText{font-size:clamp(27px,6vw,55px);font-weight:bold;color:#c98900;line-height:1.3}
+.heart{font-size:clamp(65px,15vw,130px);animation:heartbeat 1.1s infinite}
+@keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg) scale(1.04)}}
+@keyframes appear{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:none}}
+@keyframes rise{0%{transform:translateY(25vh) rotate(0);opacity:0}12%{opacity:1}100%{transform:translateY(-120vh) rotate(360deg);opacity:0}}
+@keyframes fall{to{transform:translateY(115vh) rotate(360deg)}}
+@keyframes heartbeat{0%,100%{transform:scale(1)}15%{transform:scale(1.15)}30%{transform:scale(1)}45%{transform:scale(1.1)}}
+</style>
+</head>
+<body>
+<div id="app">
+<button class="music" id="musicBtn" onclick="musicInfo()">🎵 Música</button>
+
+<section id="welcome" class="screen">
+ <div class="start">
+  <div class="flower">🌻</div>
+  <h1>Jessy</h1>
+  <p>Tengo algo especial para ti...</p>
+  <button onclick="start()">Toca aquí 💛</button>
+  <div class="hint">Una pequeña sorpresa hecha especialmente para ti</div>
+ </div>
+</section>
+
+<section id="main" class="screen hidden">
+ <div class="card">
+  <div class="big">🌻🌻🌻</div>
+  <h2>Para Jessy</h2>
+  <div class="date">21 de septiembre</div>
+  <div class="intro">Porque tú eres <strong>diferente y especial</strong>, te mereces un regalo especial. 💛</div>
+  <button class="continue" onclick="reveal()">Hay algo más... 🌻</button>
+  <div id="letter">
+   Espero ser parte de tu vida para poder regalarte
+   <strong>cada 21 de septiembre tus flores amarillas</strong>!!<br><br>
+   <strong>¡TE AMO! ❤️</strong>
+   <div class="signature">🌻 Con mucho cariño, para ti 🌻</div>
+  </div>
+ </div>
+</section>
+
+<section id="final" class="screen hidden">
+ <div>
+  <div class="heart">❤️</div>
+  <div class="finalText">Cada 21 de septiembre,<br>quiero recordarte lo especial que eres.</div>
+  <div style="font-size:55px;margin-top:18px">🌻🌻🌻</div>
+ </div>
+</section>
+</div>
+
+<script>
+const app=document.getElementById('app');
+let started=false;
+function start(){
+ started=true;
+ document.getElementById('welcome').classList.add('hidden');
+ setTimeout(()=>document.getElementById('main').classList.remove('hidden'),500);
+ if(navigator.vibrate) navigator.vibrate(70);
+ for(let i=0;i<25;i++) setTimeout(flower,i*100);
+ for(let i=0;i<22;i++) setTimeout(petal,i*80);
+}
+function reveal(){
+ document.querySelector('.continue').style.display='none';
+ document.getElementById('letter').style.display='block';
+ for(let i=0;i<30;i++) setTimeout(flower,i*80);
+ if(navigator.vibrate) navigator.vibrate([70,50,70]);
+ setTimeout(()=>document.getElementById('final').classList.remove('hidden'),6500);
+}
+function flower(){
+ const f=document.createElement('div');
+ f.className='flowerFloat';f.textContent='🌻';
+ f.style.left=Math.random()*100+'vw';
+ f.style.bottom='-12vh';
+ f.style.fontSize=(25+Math.random()*45)+'px';
+ f.style.animationDuration=(5+Math.random()*5)+'s';
+ app.appendChild(f);setTimeout(()=>f.remove(),11000);
+}
+function petal(){
+ const p=document.createElement('div');
+ p.className='petal';p.textContent=Math.random()>.4?'🌼':'✨';
+ p.style.left=Math.random()*100+'vw';
+ p.style.fontSize=(15+Math.random()*22)+'px';
+ p.style.animationDuration=(5+Math.random()*6)+'s';
+ app.appendChild(p);setTimeout(()=>p.remove(),12000);
+}
+function musicInfo(){
+ alert('🎵 La página está preparada para acompañarse con “Flores amarillas”. Para incluir la grabación de la canción, utiliza una fuente o archivo de audio que tengas derecho a usar.');
+}
+</script>
+</body>
+</html>
